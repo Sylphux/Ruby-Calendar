@@ -5,46 +5,67 @@ Bundler.require
 
 require_relative 'lib/user'
 require_relative 'lib/event'
+require_relative 'lib/show'
 
-def askpostpone
-    puts "Postpone ? Y/n"
-    question = gets.chomp
-    if question == "y" or question == ""
-        return true
-    else
-        return false
-    end
+def create_event(eventlist)
+
+    #takes info on event
+    puts "Name of event : "
+    event_name = gets.chomp.to_s
+    puts "Date of event (yyyy-mm-dd hh:mm) :"
+    event_date = gets.chomp.to_s
+    puts "Duration of event :"
+    event_duration = gets.chomp.to_i
+    puts "Event mail :"
+    event_mail = gets.chomp.to_s
+
+    #create event
+    Event.new(event_date, event_duration, event_name, [event_mail])
+    event_id = Event.find_by_name(event_name)
+    eventlist << event_id
+    puts "Event created with ID : " + event_id.to_s + " and name '#{event_name}'"
+
+end
+
+def postpone_id(name)
+    id = Event.find_by_name(name)
+    id.postpone
+    puts "Event '#{name}' with id '#{id}' has been postponed 24:00 ahead"
 end
 
 def perform
+    eventlist = [] #list with the adress of all events
+    puts "Bienvenue dans Ruby-Calendar."
+    while true
+        puts "Do you want to add another event ? (Y/n)"
+        ask = gets.chomp.to_s
+        if ask == "y" or ask == ""
+            create_event(eventlist)
+        else
+            break
+        end
+    end
+    #puts eventlist
 
-    #remplir les users
-    puts "### USERS ####"
-    julie = User.new("juliefun@gmail.com", 24)
-    lord = User.new("juliefl.com", 23)
-    funlord = User.new("juliefun@gl.com", 22)
-    cricachoc = User.new("ulun@gmail.com", 21)
-    puts User.all, "\n"
-    puts "Number of users : " + User.count.to_s, "\n"
+    #ask if we want to postpone an event
+    while true
+        puts "do you want to postpone an event ? (name_of_event/NO)"
+        ask = gets.chomp.to_s
+        if ask != "" and ask != "n"
+            postpone_id(ask)
+        else
+            break
+        end
+    end
 
-    #remplir les events
-    puts "### EVENTS ###"
-    first = Event.new("2025-09-22 20:00", 10, "Bouffe", [julie.email, lord.email])
-    second = Event.new("2028-01-13 11:00", 20, "Dodo", [julie.email, lord.email])
-    third = Event.new("2019-01-13 15:00", 30, "Metro", [julie.email, lord.email])
-    puts Event.all
-    puts first.giveinfo
-
-    #postponing first to 24h
-    first.postpone
-    puts "\n### Event postponed ###"
-    puts first.giveinfo
-
-    #find by email
-    id = User.find_by_email("juliefun@gmail.com")
-    puts "User ID is : " + id.to_s
-    puts "Users age is : " + id.age.to_s
-
+    #ask for printing calendar
+    puts "Print calendar ?"
+    ask = gets.chomp.to_s
+    if ask == "" or ask == "y"
+        putcalendar(eventlist)
+    end
 end
+
+
 
 perform

@@ -25,12 +25,21 @@ class Event
         @date
     end
 
+    def ev_title
+        @title
+    end
+
+    def ev_attend
+        @attendees
+    end
+
     def self.all
         @@events
     end
 
     def postpone
         @date += 60*60*24
+        puts "Postponed to " + @date.to_s
     end
 
     def endtime
@@ -50,6 +59,15 @@ class Event
             return true
         else
             return false
+        end
+    end
+
+    def self.find_by_name(name)
+        for n in @@events
+            if n.title == name
+                return n
+                break
+            end
         end
     end
 
