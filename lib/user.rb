@@ -11,6 +11,10 @@ class User
         @@count += 1
     end
 
+    def email
+        @email
+    end
+
     def intro
         puts "Hey, i'm #{@email} and im #{@age} y.o."
     end
@@ -19,8 +23,21 @@ class User
         @@users
     end
 
+    def age
+        @age
+    end
+
     def self.count 
         @@count
+    end
+
+    def self.find_by_email(email)
+        for n in @@users
+            if n.email == email
+                return n
+                break
+            end
+        end
     end
 
     private #exec juste depuis la class
