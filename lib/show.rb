@@ -7,9 +7,17 @@ def putcalendar(eventlist)
         for n in eventlist
             if n.date.mday.to_i == day.to_i
                 puts
-                puts "EVENT : #{n.ev_title}"
-                puts "Organizer : #{n.ev_attend}"
-                puts "Time : #{n.date.hour}:#{n.date.min}"
+                puts "##### #{n.title} #####"
+                puts "Date od event : " + n.date.to_s
+                puts "Event length : " + n.len.to_s
+                puts "Is over : #{n.isover.to_s}"
+                puts "Is soon : #{n.issoon.to_s}"
+                emails_list = []
+                for att in n.attendees do
+                    emails_list << att.email
+                end
+                puts "Invited users : " + emails_list.to_s
+                emails_list = []
                 puts
             end
         end

@@ -7,30 +7,8 @@ class Event
         @date = Time.parse(date) #Time
         @len = len.to_i #Integer
         @title = title #string
-        @attendees = attendees #array of emails
+        @attendees = attendees #link to user instance
         @@events << self
-    end
-
-    def giveinfo
-        puts "Title : " + @title
-        puts "Date : " + @date.to_s
-        puts "Duration : " + @len.to_s
-        puts "Users : " + @attendees.to_s
-        puts "Endtime : " + endtime.to_s
-        puts "Event is over : " + isover.to_s
-        puts "Event is in less than 30 minutes : " + issoon.to_s
-    end
-
-    def date
-        @date
-    end
-
-    def ev_title
-        @title
-    end
-
-    def ev_attend
-        @attendees
     end
 
     def self.all

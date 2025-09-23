@@ -11,20 +11,12 @@ class User
         @@count += 1
     end
 
-    def email
-        @email
-    end
-
     def intro
         puts "Hey, i'm #{@email} and im #{@age} y.o."
     end
 
     def self.all #methode de classe, toujours appelées avec self.
         @@users
-    end
-
-    def age
-        @age
     end
 
     def self.count 
@@ -39,7 +31,5 @@ class User
             end
         end
     end
-
-    private #exec juste depuis la class
 
 end
